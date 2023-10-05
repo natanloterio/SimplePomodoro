@@ -56,7 +56,7 @@ class MainFragment: Fragment() {
 
     private fun createTimerTask() = object : TimerTask() {
         override fun run() {
-            counter++
+            counter--
             updateCounterOnScreen()
         }
     }
@@ -64,7 +64,6 @@ class MainFragment: Fragment() {
     private fun onClickStartTimer() {
         viewBinding.btnStart.visibility = View.GONE
         viewBinding.btnStop.visibility = View.VISIBLE
-        counter = 0
         scheduledTimer = executorService.scheduleAtFixedRate(timerTask, 0,1, TimeUnit.SECONDS);
     }
 

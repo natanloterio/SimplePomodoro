@@ -73,7 +73,6 @@ class MainFragmentTest {
         assertThat(spinner35, notNullValue())
     }
 
-
     @Test
     fun spinner_shows_55minutes() {
         // Arrange
@@ -92,6 +91,34 @@ class MainFragmentTest {
         spinnerOption?.click()
 
         assertThat(selectedTimeTV!!.text, `is`("55"))
+    }
+
+    @Test
+    fun test_that_timer_starts() {
+        // Arrange
+        var selectedTimeTV: UiObject2? = device.wait(Until.findObject(By.textContains("Time Remaining")), LAUNCH_TIMEOUT)
+        assertThat(selectedTimeTV, notNullValue())
+
+        // Act
+        val spinner: UiObject2? = device.wait(Until.findObject(By.text("Select Time")), LAUNCH_TIMEOUT)
+        assertThat(spinner, notNullValue())
+
+        spinner?.click()
+
+        val spinnerOption: UiObject2? = device.wait(Until.findObject(By.text("55")), LAUNCH_TIMEOUT)
+        assertThat(spinnerOption, notNullValue())
+
+        spinnerOption?.click()
+
+        val startTimerButton: UiObject2? = device.wait(Until.findObject(By.text("START")), LAUNCH_TIMEOUT)
+        assertThat(spinnerOption, notNullValue())
+
+        startTimerButton?.click()
+
+        // Wait 5 seconds for the timer value to be 51
+        selectedTimeTV = device.wait(Until.findObject(By.text("52")), 5*1000)
+
+        assertThat(selectedTimeTV, notNullValue())
     }
 
 }
