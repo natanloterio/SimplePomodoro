@@ -65,12 +65,16 @@ class MainFragment: Fragment() {
     private fun onClickStartTimer() {
         viewBinding.btnStart.visibility = View.GONE
         viewBinding.btnStop.visibility = View.VISIBLE
+        viewBinding.spnrTime.visibility = View.GONE
+        viewBinding.tvText.visibility = View.VISIBLE
         scheduledTimer = executorService.scheduleAtFixedRate(timerTask, 0,1, TimeUnit.SECONDS);
     }
 
     private fun onClickStopTimer() {
         viewBinding.btnStop.visibility = View.GONE
         viewBinding.btnStart.visibility = View.VISIBLE
+        viewBinding.spnrTime.visibility = View.VISIBLE
+        viewBinding.tvText.visibility = View.GONE
         counter = 0
         scheduledTimer?.cancel(true)
         updateCounterOnScreen()
