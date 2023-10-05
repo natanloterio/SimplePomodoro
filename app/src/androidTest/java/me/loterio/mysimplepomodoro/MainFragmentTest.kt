@@ -46,19 +46,14 @@ class MainFragmentTest {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         context.startActivity(intent)
-        // Wait for the app to appear
-//        device.wait(Until.hasObject(By.pkg(SAMPLE_PACKAGE).depth(0)), LAUNCH_TIMEOUT)
-        device.wait(Until.hasObject(By.clazz(MainActivity::class.java).depth(0)), LAUNCH_TIMEOUT)
 
+        // Wait for the app to appear
+        device.wait(Until.hasObject(By.clazz(MainActivity::class.java).depth(0)), LAUNCH_TIMEOUT)
     }
 
     @Test
     fun spinner_shows_25minutes() {
-        // Act
-        val selectedTimeTV: UiObject2? = device.wait(Until.findObject(By.textContains("Time Remaining")), LAUNCH_TIMEOUT)
-        assertThat(selectedTimeTV, notNullValue())
-
-        // Act
+        // Assert
         val spinner: UiObject2? = device.wait(Until.findObject(By.text("Select Time")), LAUNCH_TIMEOUT)
         assertThat(spinner, notNullValue())
 
@@ -92,6 +87,7 @@ class MainFragmentTest {
 
         assertThat(selectedTimeTV!!.text, `is`("55"))
     }
+
 
     @Test
     fun test_that_timer_starts() {
