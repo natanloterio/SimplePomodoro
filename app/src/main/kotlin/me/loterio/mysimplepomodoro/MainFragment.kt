@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
 import me.loterio.mysimplepomodoro.databinding.MainFragmentBinding
-import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledFuture
@@ -32,6 +34,24 @@ class MainFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.btnStart.setOnClickListener { onClickStartTimer() }
         viewBinding.btnStop.setOnClickListener { onClickStopTimer() }
+
+        with(viewBinding.spnrTime) {
+            adapter = TimerSpinnerAdapter()
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    if (position == 0) return
+                    val selectedItem = parent?.getItemAtPosition(position)
+                    counter = selectedItem.toString().toInt()
+                    viewBinding.tvText.text = selectedItem.toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    viewBinding.tvText.text = "Nothing selected"
+                }
+            }
+        }
+
     }
 
     private fun createTimerTask() = object : TimerTask() {
